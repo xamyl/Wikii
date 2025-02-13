@@ -36,7 +36,22 @@ const hljs = require('highlight.js');
 const inputDir = './docs';
 const outputDir = './dist';
 
+marked.use({
+  mangle: false,
+  headerIds: false,
+  headerPrefix: '',
+});
+
 const renderer = new marked.Renderer();
+renderer.link = function (href, title, text) {
+  const filePath = path.join(inputDir, href);
+  const linkExists = fs.existsSync(filePath);
+  if (linkExists) {
+    return \`<a href="\${href}">\${text}</a>\`;
+  }
+  return \`<a href="#">\${text} (invalid link)</a>\`;
+};
+
 renderer.code = function (code, language) {
   const highlighted = hljs.highlightAuto(code).value;
   return \`<pre><code class="hljs \${language}">\${highlighted}</code></pre>\`;
