@@ -36,7 +36,9 @@ const buildWiki = async () => {
   try {
     const files = await fs.readdir(inputDir);
     await fs.ensureDir(outputDir);
-    
+
+    await fs.copy(path.join(__dirname, 'global.css'), path.join(outputDir, 'global.css'));
+
     const promises = files.map(async (file) => {
       const filePath = path.join(inputDir, file);
       if (filePath.endsWith('.md')) {
@@ -52,7 +54,7 @@ const buildWiki = async () => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
-  <link rel="stylesheet" href="../global.css">
+  <link rel="stylesheet" href="global.css">
 </head>
 <body>
   <h1>${title}</h1>
