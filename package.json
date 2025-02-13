@@ -1,5 +1,5 @@
 {
-  "name": "wikii",
+  "name": "@xamyl/wikii",
   "version": "1.0.0",
   "description": "Fast MediaWiki-like Node.js static wiki generator for Github Pages",
   "main": "index.js",
@@ -21,6 +21,9 @@
   "devDependencies": {
     "nodemon": "^2.0.20"
   },
-  "author": "xamyl1",
-  "license": "ISC"
+  "author": "xamyl",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }
