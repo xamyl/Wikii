@@ -1,5 +1,5 @@
 {
-  "name": "@xamyl/wikii",
+  "name": "wikii",
   "version": "1.0.0",
   "description": "Fast MediaWiki-like Node.js static wiki generator for Github Pages",
   "main": "index.js",
