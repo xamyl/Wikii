@@ -1,6 +1,6 @@
 {
   "name": "wikii",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Fast MediaWiki-like Node.js static wiki generator for Github Pages",
   "main": "index.js",
   "bin": {
