@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const { marked } = require('marked');
+const marked = require('marked');
 const path = require('path');
 const hljs = require('highlight.js');
 
@@ -27,20 +27,40 @@ renderer.code = function (code, language) {
   return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
 };
 
-marked.use({ renderer });
+marked.setOptions({
+  renderer: renderer,
+  highlight: (code, lang) => hljs.highlightAuto(code).value,
+});
 
 const buildWiki = async () => {
   try {
     const files = await fs.readdir(inputDir);
     await fs.ensureDir(outputDir);
-
+    
     const promises = files.map(async (file) => {
       const filePath = path.join(inputDir, file);
       if (filePath.endsWith('.md')) {
         const content = await fs.readFile(filePath, 'utf8');
-        const htmlContent = marked(content);  
+        const htmlContent = marked(content);
+
+        const title = path.basename(file, '.md').replace(/^./, (str) => str.toUpperCase());
         const htmlFilePath = path.join(outputDir, `${path.basename(file, '.md')}.html`);
-        await fs.writeFile(htmlFilePath, htmlContent);
+        
+        const fullHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+  <link rel="stylesheet" href="../global.css">
+</head>
+<body>
+  <h1>${title}</h1>
+  ${htmlContent}
+</body>
+</html>`;
+
+        await fs.writeFile(htmlFilePath, fullHtml);
       }
     });
 

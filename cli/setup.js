@@ -72,8 +72,25 @@ const buildWiki = async () => {
       if (filePath.endsWith('.md')) {
         const content = await fs.readFile(filePath, 'utf8');
         const htmlContent = marked(content);
+
+        const title = path.basename(file, '.md').replace(/^./, (str) => str.toUpperCase());
         const htmlFilePath = path.join(outputDir, \`\${path.basename(file, '.md')}.html\`);
-        await fs.writeFile(htmlFilePath, htmlContent);
+        
+        const fullHtml = \`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>\${title}</title>
+  <link rel="stylesheet" href="../global.css">
+</head>
+<body>
+  <h1>\${title}</h1>
+  \${htmlContent}
+</body>
+</html>\`;
+
+        await fs.writeFile(htmlFilePath, fullHtml);
       }
     });
 
@@ -160,7 +177,7 @@ app.listen(port, () => {
     await fs.writeFile(path.join(wikiDir, 'server.js'), serverJs);
 
     const packageJson = {
-      name: wikiName,
+      name: wikiName.replace(/[^a-z0-9]/gi, '-').toLowerCase(),
       version: '1.0.0',
       description: `${wikiName} - A Node.js wiki generator for GitHub Pages with built-in search`,
       scripts: {
@@ -177,14 +194,14 @@ app.listen(port, () => {
       devDependencies: {
         nodemon: '^2.0.20',
       },
-      bin: {
-        wikii: './cli/setup.js',
-      },
     };
+
     await fs.writeJson(path.join(wikiDir, 'package.json'), packageJson);
 
     console.log('Installing dependencies...');
     exec('npm install', { cwd: wikiDir });
+
+    await fs.copy(path.join(__dirname, 'global.css'), path.join(wikiDir, 'global.css'));
 
     console.log('Wiki project setup complete!');
     console.log(`To start your wiki, run the following commands:`);
