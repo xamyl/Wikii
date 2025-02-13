@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usage</title>
+  <link rel="stylesheet" href="global.css">
+</head>
+<body>
+  <h1>Usage</h1>
+  <h1>Usage</h1>
+<h2>Editing</h2>
+<p>Once you have your project, start editing the <code>index.md</code> file in the <code>/docs</code> folder to add content for your wiki.</p>
+<h2>Viewing your site</h2>
+<p>Type</p>
+<pre><code class="hljs bash"><span class="hljs-built_in">npm</span> start</code></pre><p>into your shell. This uses express, which supports live editing, so you can edit pages live!</p>
+<h2>Making extra pages</h2>
+<p>To make more pages, just make more markdown files in your <code>/docs</code> directory.</p>
+<h2>Building and deploying your site</h2>
+<p>First, to build your site, run</p>
+<pre><code class="hljs bash">npm <span class="hljs-built_in">run</span> build</code></pre><p>This will convert your docs files into html files and put them in the <code>/dist</code> directory.</p>
+<p>To deploy it, upload all files from the <code>/dist</code> directory onto the platform you want to use.</p>
+<h3>Vercel/Github Pages/Gitlab Pages/Codeberg Pages</h3>
+<p>Upload the contents of your <code>/dist</code> directory to your chosen git provider [Side note, for vercel, Add your git provider and repository], and follow the steps on the site to deploy it.</p>
+<h3>Netlify</h3>
+<p>Either follow the tutorial above, or drag and drop your <code>/dist</code> directory onto <a href="#">Netlify Drop (invalid link)</a></p>
+<h3>Cloudflare Pages</h3>
+<p>Same as #1, but also supports directories (You know what to do, upload your <code>/dist</code> directory)</p>
+<h3>nginx</h3>
+<p>Edit your nginx.conf file to add the dist directory as the main directory, and index.html as your main page. Then run your nginx server, and voila! Your site is live on the configured domain!</p>
+<h3>Other hosting providers (mostly)</h3>
+<p>Add your <code>/dist</code> directory [Or the contents] to the site.</p>
+<h3>Other Webservers (mostly)</h3>
+<p>Configure the webserver to point to your dist directory as the root directory, and start the webserver.</p>
+
+</body>
+</html>
