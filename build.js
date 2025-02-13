@@ -41,7 +41,7 @@ const buildWiki = async () => {
       const filePath = path.join(inputDir, file);
       if (filePath.endsWith('.md')) {
         const content = await fs.readFile(filePath, 'utf8');
-        const htmlContent = marked(content);
+        const htmlContent = marked.parse(content);
 
         const title = path.basename(file, '.md').replace(/^./, (str) => str.toUpperCase());
         const htmlFilePath = path.join(outputDir, `${path.basename(file, '.md')}.html`);
